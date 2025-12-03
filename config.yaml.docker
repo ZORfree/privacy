@@ -1,0 +1,13 @@
+database:
+  path: ${DATABASE_PATH}
+  tables:
+    qq: ${TABLES_QQ}
+    jd: ${TABLES_JD}
+    sf: ${TABLES_SF}
+    wb: ${TABLES_WB}
+
+http:
+  host: 0.0.0.0
+  port: ${HTTP_PORT}
+
+mask: ${MASK_ENABLED}
