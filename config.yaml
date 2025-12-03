@@ -1,16 +1,13 @@
 database:
-  path: ../database/database.db
+  path: ${DATABASE_PATH}
   tables:
-    qq: true
-    jd: true
-    sf: false # Not support
-    wb: false # Not support
+    qq: ${TABLES_QQ}
+    jd: ${TABLES_JD}
+    sf: ${TABLES_SF}
+    wb: ${TABLES_WB}
 
 http:
   host: 0.0.0.0
-  port: 80
-#  tls:
-#    cert_path: server.crt
-#    key_path: server.key
+  port: ${HTTP_PORT}
 
-mask: true
+mask: ${MASK_ENABLED}
