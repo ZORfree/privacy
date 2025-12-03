@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
+import { createMuiTheme } from "@material-ui/core/styles";
 import {grey, pink} from "@material-ui/core/colors";
 import {ThemeProvider} from '@material-ui/core/styles';
 

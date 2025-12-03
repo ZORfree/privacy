@@ -7,7 +7,8 @@ import (
 	"github.com/kallydev/privacy/database/table"
 	"github.com/kallydev/privacy/ent"
 	"github.com/labstack/echo/v4"
-	_ "github.com/mattn/go-sqlite3"
+	// _ "github.com/mattn/go-sqlite3"
+	_ "modernc.org/sqlite"
 	"log"
 	"net"
 	"strconv"
@@ -47,7 +48,7 @@ func (svc *Service) loadRouter() {
 }
 
 func (svc *Service) LoadDatabase() (err error) {
-	svc.client, err = ent.Open("sqlite3", fmt.Sprintf("file:%s", svc.config.Database.Path))
+	svc.client, err = ent.Open("sqlite", fmt.Sprintf("file:%s", svc.config.Database.Path))
 	if err != nil {
 		return err
 	}

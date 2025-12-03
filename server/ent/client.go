@@ -51,7 +51,7 @@ func (c *Client) init() {
 // Optional parameters can be added for configuring the client.
 func Open(driverName, dataSourceName string, options ...Option) (*Client, error) {
 	switch driverName {
-	case dialect.MySQL, dialect.Postgres, dialect.SQLite:
+	case dialect.MySQL, dialect.Postgres, dialect.SQLite, "sqlite":
 		drv, err := sql.Open(driverName, dataSourceName)
 		if err != nil {
 			return nil, err
