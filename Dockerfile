@@ -10,8 +10,6 @@ COPY server/dist/database.db .
 
 WORKDIR /server
 COPY server/dist/ .
-# 调试：打印目录结构
-RUN ls -laR ./ || echo "server/ not found!"
 
 WORKDIR /app
 
@@ -33,8 +31,8 @@ RUN case "$TARGETARCH" in \
         arm)   BINARY_PATH="../server/app_linux_arm/app" ;; \
         *) echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
-    if [ ! -f "$BINARY" ]; then \
-        echo "ERROR: Binary not found at $BINARY" && \
+    if [ ! -f "$BINARY_PATH" ]; then \
+        echo "ERROR: Binary not found at $BINARY_PATH" && \
         ls -la ../server/ && \
         exit 1; \
     fi && \
