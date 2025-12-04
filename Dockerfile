@@ -26,9 +26,9 @@ COPY website/build/ /app/
 
 # 使用条件逻辑（Dockerfile 1.4+ 支持）
 RUN case "$TARGETARCH" in \
-        amd64) BINARY_PATH="server/dist/app_linux_amd64/app" ;; \
-        arm64) BINARY_PATH="server/dist/app_linux_arm64/app" ;; \
-        arm)   BINARY_PATH="server/dist/app_linux_arm/app" ;; \
+        amd64) BINARY_PATH="server/app_linux_amd64/app" ;; \
+        arm64) BINARY_PATH="server/app_linux_arm64/app" ;; \
+        arm)   BINARY_PATH="server/app_linux_arm/app" ;; \
         *) echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
     cp "$BINARY_PATH" ./app
