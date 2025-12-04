@@ -16,7 +16,7 @@ COPY website/build/ /app/static/
 COPY server/dist/app_linux_${TARGET_ARCH_DIR}/app ./app
 
 # 复制配置和脚本
-COPY config.yaml.template .
+COPY config.yaml.docker .
 COPY entrypoint.sh .
 
 # 设置权限
