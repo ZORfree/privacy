@@ -1,24 +1,28 @@
+# Dockerfile
 FROM alpine:latest
 
+# 安装依赖
 RUN apk --no-cache add ca-certificates gettext
 
 WORKDIR /app
 
-# 复制前端
-COPY website/build/ /app/
+# 接收外部传入的架构目录名（如 amd64, arm64, arm）
+ARG TARGET_ARCH_DIR
 
-# 复制后端二进制（多架构）
-ARG TARGETARCH
-ARG TARGETVARIANT
-COPY server/dist/app_linux_${TARGETARCH}/app ./app
+# 复制前端
+COPY website/build/ /app/static/
+
+# 复制对应架构的二进制
+COPY server/dist/app_linux_${TARGET_ARCH_DIR}/app ./app
 
 # 复制配置和脚本
-COPY config.yaml.docker .
+COPY config.yaml.template .
 COPY entrypoint.sh .
 
-RUN chmod +x entrypoint.sh app
+# 设置权限
+RUN chmod +x app entrypoint.sh
 
-# （可选）创建非 root 用户
+# 创建非 root 用户（可选但推荐）
 RUN addgroup -g 1001 -S appuser && \
     adduser -u 1001 -S appuser -G appuser
 USER appuser
