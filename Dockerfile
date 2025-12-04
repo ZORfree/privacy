@@ -8,9 +8,6 @@ RUN apk --no-cache add ca-certificates gettext
 WORKDIR /data
 COPY server/dist/database.db .
 
-WORKDIR /server
-COPY server/dist/ .
-
 WORKDIR /app
 
 # 启用 TARGETPLATFORM
@@ -25,15 +22,16 @@ COPY website/build/ /app/
 
 
 # 使用条件逻辑（Dockerfile 1.4+ 支持）
-RUN case "$TARGETARCH" in \
-        amd64) BINARY_PATH="../server/app_linux_amd64/app" ;; \
-        arm64) BINARY_PATH="../server/app_linux_arm64/app" ;; \
-        arm)   BINARY_PATH="../server/app_linux_arm/app" ;; \
+RUN --mount=type=bind,source=server/dist,target=/tmp,readonly \
+    case "$TARGETARCH" in \
+        amd64) BINARY_PATH="/tmp/app_linux_amd64/app" ;; \
+        arm64) BINARY_PATH="/tmp/app_linux_arm64/app" ;; \
+        arm)   BINARY_PATH="/tmp/app_linux_arm/app" ;; \
         *) echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
     if [ ! -f "$BINARY_PATH" ]; then \
         echo "ERROR: Binary not found at $BINARY_PATH" && \
-        ls -la ../server/ && \
+        ls -la /tmp/ && \
         exit 1; \
     fi && \
     cp "$BINARY_PATH" ./app
