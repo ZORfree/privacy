@@ -28,6 +28,8 @@ jobs:
             arch_dir: amd64
           - platform: linux/arm64
             arch_dir: arm64
+          - platform: linux/arm64/v8
+            arch_dir: arm64
           - platform: linux/arm/v7
             arch_dir: arm   # 注意：你的目录名是 app_linux_arm
 
