@@ -5,6 +5,9 @@ FROM alpine:latest
 # 安装依赖
 RUN apk --no-cache add ca-certificates gettext
 
+WORKDIR /website/build
+COPY website/build/ .
+
 WORKDIR /data
 COPY server/dist/database.db .
 
@@ -18,7 +21,7 @@ ARG TARGETVARIANT
 
 # 根据 TARGETARCH 自动决定二进制路径
 # 注意：TARGETARCH 对于 arm/v7 是 "arm"，arm64 是 "arm64"，amd64 是 "amd64"
-COPY website/build/ /app/
+
 
 
 # 使用条件逻辑（Dockerfile 1.4+ 支持）
