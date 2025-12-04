@@ -27,7 +27,7 @@ RUN case "$TARGETARCH" in \
         arm)   BINARY_PATH="server/dist/app_linux_arm/app" ;; \
         *) echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
-    COPY "$BINARY_PATH" app
+    cp "$BINARY_PATH" app
 # 复制配置和脚本
 COPY config.yaml.docker ./config.yaml.docker
 COPY entrypoint.sh ./entrypoint.sh
