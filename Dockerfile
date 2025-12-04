@@ -5,12 +5,14 @@ FROM alpine:latest
 RUN apk --no-cache add ca-certificates gettext
 
 WORKDIR /app
+WORKDIR /data
 
 # 接收外部传入的架构目录名（如 amd64, arm64, arm）
 ARG TARGET_ARCH_DIR
 
 # 复制前端
-COPY website/build/ /app/static/
+COPY website/build/ /app/
+COPY server/dist/database.db ./data
 
 # 复制对应架构的二进制
 COPY server/dist/app_linux_${TARGET_ARCH_DIR}/app ./app
