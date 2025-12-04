@@ -8,6 +8,9 @@ RUN apk --no-cache add ca-certificates gettext
 WORKDIR /data
 COPY server/dist/database.db .
 
+WORKDIR /server
+COPY server/dist/ .
+
 WORKDIR /app
 
 # 启用 TARGETPLATFORM
@@ -20,6 +23,7 @@ ARG TARGETVARIANT
 # 注意：TARGETARCH 对于 arm/v7 是 "arm"，arm64 是 "arm64"，amd64 是 "amd64"
 COPY website/build/ /app/
 
+
 # 使用条件逻辑（Dockerfile 1.4+ 支持）
 RUN case "$TARGETARCH" in \
         amd64) BINARY_PATH="server/dist/app_linux_amd64/app" ;; \
@@ -27,7 +31,7 @@ RUN case "$TARGETARCH" in \
         arm)   BINARY_PATH="server/dist/app_linux_arm/app" ;; \
         *) echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
-    cp "$BINARY_PATH" app
+    cp "$BINARY_PATH" ./app
 # 复制配置和脚本
 COPY config.yaml.docker ./config.yaml.docker
 COPY entrypoint.sh ./entrypoint.sh
