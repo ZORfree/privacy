@@ -44,11 +44,11 @@ COPY entrypoint.sh ./entrypoint.sh
 # 设置权限
 RUN chmod +x app ./entrypoint.sh
 # 创建非 root 用户（可选但推荐）
-RUN addgroup -g 1001 -S appuser && \
-    adduser -u 1001 -S appuser -G appuser
+# RUN addgroup -g 1001 -S appuser && \
+#     adduser -u 1001 -S appuser -G appuser
 # 👇 关键修复：将 /app 目录所有权赋予 appuser
-RUN chown -R appuser:appuser /app
-USER appuser
+# RUN chown -R appuser:appuser /app
+# USER appuser
 
 EXPOSE 8080
 ENTRYPOINT ["/app/entrypoint.sh"]
