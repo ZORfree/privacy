@@ -10,6 +10,8 @@ COPY server/dist/database.db .
 
 WORKDIR /server
 COPY server/dist/ .
+# 调试：打印目录结构
+RUN ls -laR ./ || echo "server/ not found!"
 
 WORKDIR /app
 
@@ -26,11 +28,16 @@ COPY website/build/ /app/
 
 # 使用条件逻辑（Dockerfile 1.4+ 支持）
 RUN case "$TARGETARCH" in \
-        amd64) BINARY_PATH="server/app_linux_amd64/app" ;; \
-        arm64) BINARY_PATH="server/app_linux_arm64/app" ;; \
-        arm)   BINARY_PATH="server/app_linux_arm/app" ;; \
+        amd64) BINARY_PATH="../server/app_linux_amd64/app" ;; \
+        arm64) BINARY_PATH="../server/app_linux_arm64/app" ;; \
+        arm)   BINARY_PATH="../server/app_linux_arm/app" ;; \
         *) echo "Unsupported architecture: $TARGETARCH" && exit 1 ;; \
     esac && \
+    if [ ! -f "$BINARY" ]; then \
+        echo "ERROR: Binary not found at $BINARY" && \
+        ls -la ../server/ && \
+        exit 1; \
+    fi && \
     cp "$BINARY_PATH" ./app
 # 复制配置和脚本
 COPY config.yaml.docker ./config.yaml.docker
