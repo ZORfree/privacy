@@ -22,7 +22,7 @@ COPY config.yaml.docker ./app
 COPY entrypoint.sh ./app
 
 # 设置权限
-RUN chmod +x app entrypoint.sh
+RUN chmod +x app ./app/entrypoint.sh
 
 # 创建非 root 用户（可选但推荐）
 RUN addgroup -g 1001 -S appuser && \
