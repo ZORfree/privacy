@@ -18,8 +18,8 @@ COPY server/dist/database.db ./data
 COPY server/dist/app_linux_${TARGET_ARCH_DIR}/app ./app
 
 # 复制配置和脚本
-COPY config.yaml.docker .
-COPY entrypoint.sh .
+COPY config.yaml.docker ./app
+COPY entrypoint.sh ./app
 
 # 设置权限
 RUN chmod +x app entrypoint.sh

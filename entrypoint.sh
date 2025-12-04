@@ -17,5 +17,6 @@ set -e
 # ===== 生成 config.yaml =====
 envsubst < /app/config.yaml.docker > /app/config.yaml
 
+cd /app/ || exit 1
 # ===== 启动应用 =====
-exec /app/app --config config.yaml
+exec ./app --config ./config.yaml
